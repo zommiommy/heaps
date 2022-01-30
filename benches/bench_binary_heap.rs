@@ -1,13 +1,13 @@
-#![feature(test)]
+#![feature(test, portable_simd)]
 extern crate test;
 use test::{black_box, Bencher};
+use std::simd::u64x8;
 
 // our implementation
 extern crate heaps;
 use heaps::BinaryHeap as MyBinaryHeap;
 use heaps::KAryHeap;
-use heaps::{Element, GenericPriorityQueue};
-use heaps::PriorityQueue;
+use heaps::VectorizedBinaryHeap;
 
 // the standard reference implementation
 use std::collections::BinaryHeap;
@@ -19,7 +19,7 @@ mod utils;
 use utils::*;
 
 // Constants for benching
-const SIZE: usize = 10_000;
+const SIZE: usize = 0x10_000;
 const MAX: u64 = u64::MAX;
 
 
@@ -55,6 +55,27 @@ mod my_binary_heap {
         });
     }
 }
+
+mod vectorized_binary_heap {
+    use super::*;
+
+    #[bench]
+    fn push(b: &mut Bencher) {
+        let data = build_random_vector(SIZE, MAX);
+
+        b.iter(|| {
+            let mut my_heap = VectorizedBinaryHeap::with_capacity(SIZE);
+        
+            for val in data.chunks(8) {
+                let reg = u64x8::from_slice(val);
+                let _ = black_box(my_heap.push(reg));
+            }
+        });
+    }
+
+    
+}
+
 
 mod kary_heap_2 {
     use super::*;
