@@ -1,5 +1,3 @@
-#![feature(portable_simd)]
-
 mod binary_heap;
 pub use binary_heap::BinaryHeap;
 
@@ -15,5 +13,5 @@ pub use priority_queue::*;
 mod dijkstra_queue;
 pub use dijkstra_queue::*;
 
-mod vecheap;
-pub use vecheap::*;
+//mod vecheap;
+//pub use vecheap::*;

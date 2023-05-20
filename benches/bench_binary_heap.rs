@@ -7,7 +7,7 @@ use std::simd::u64x8;
 extern crate heaps;
 use heaps::BinaryHeap as MyBinaryHeap;
 use heaps::KAryHeap;
-use heaps::VectorizedBinaryHeap;
+//use heaps::VectorizedBinaryHeap;
 
 // the standard reference implementation
 use std::collections::BinaryHeap;
@@ -56,6 +56,7 @@ mod my_binary_heap {
     }
 }
 
+/*
 mod vectorized_binary_heap {
     use super::*;
 
@@ -75,7 +76,7 @@ mod vectorized_binary_heap {
 
     
 }
-
+*/
 
 mod kary_heap_2 {
     use super::*;
